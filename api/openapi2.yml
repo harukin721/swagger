@@ -1,0 +1,16 @@
+openapi: "3.0.3"
+
+info:
+  title: "Sample API"
+  version: "1.0.0"
+
+paths: {}
+
+components:
+  schemas:
+    SampleInt32:
+      type: integer
+      format: int32
+    SampleDateString:
+      type: string
+      format: date
