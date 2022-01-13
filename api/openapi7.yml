@@ -1,0 +1,29 @@
+openapi: "3.0.3"
+
+info:
+  title: "Shop Review API"
+  version: "1.0.0"
+
+paths:
+  "/shops/{shopId}/reviews":
+    post:
+      summary: "Create Reivew"
+      parameters:
+        - name: shopId
+          in: path
+          required: true
+          schema: { type: string }
+          example: "abc"
+        - name: X-Api-Key
+          in: header
+          description: "Request users identifier"
+          schema: { type: string }
+          example: "abc-abc-abc"
+        - name: token
+          in: cookie
+          description: "One time token"
+          schema: { type: string }
+          example: "abc-abc-abc"
+      responses:
+        "201":
+          description: "成功"

@@ -1,0 +1,19 @@
+openapi: "3.0.3"
+
+info:
+  title: "Shop Review API"
+  description: |
+    # Features
+    - Get reviews
+    - Post review
+  termsOfService: "https://Shoplog.com/terms/"
+  contact:
+    name: "aaa"
+    url: "https://Shoplog.com/support/"
+    email: "aaa@exampole.com"
+  license:
+    name: "MIT license"
+    url: "https://opensource.org/licenses/MIT"
+  version: "1.0.0"
+
+paths: {}

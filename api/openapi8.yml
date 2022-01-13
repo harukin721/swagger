@@ -1,0 +1,28 @@
+openapi: "3.0.3"
+
+info:
+  title: "Shop Review API"
+  version: "1.0.0"
+
+paths:
+  "/shops/{shopId}/reviews":
+    post:
+      summary: "Create Reivew"
+      parameters:
+        - name: shopId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        description: "Contents of review"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                score: { type: integer, example: 1 }
+                comment: { type: string, example: "おいしい" }
+      responses:
+        "201":
+          description: "成功"
