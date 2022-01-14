@@ -1,0 +1,121 @@
+# セキュリティ講座
+
+openapi: "3.0.3"
+
+info:
+  title: "Shop Review API"
+  description: |
+    # Features
+    - Get reviews
+    - Post review
+  termsOfService: "https://tastylog.com/terms/"
+  contact:
+    name: "Customer Support"
+    url: "https://tastylog.com/support/"
+    email: "support-desk@tastylog.com"
+  license:
+    name: "MIT License"
+    url: "https://opensource.org/licenses/MIT"
+  version: "1.0.0"
+
+servers:
+  - url: "http://localhost:{port}"
+    description: "Local Development"
+    variables:
+      port:
+        enum: ["3000", "3001"]
+        default: "3000"
+  - url: "http://it1.tastylog.com/v1"
+    description: "Integration Test"
+  - url: "http://stg.tastylog.com/v1"
+    description: "Staging"
+  - url: "http://api.tastylog.com/v1"
+    description: "Production"
+
+tags:
+  - name: "reviews"
+    description: "Shop review operation"
+
+paths:
+  "/shops/{shopId}/reviews":
+    parameters:
+      - $ref: "#/components/parameters/shopId"
+    get:
+      summary: "Get shop reviews"
+      description: "Get spectified shops reviews"
+      tags: ["reviews"]
+      responses:
+        "200":
+          description: "Success operation"
+          content:
+            appication/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/review"
+      security: []
+
+    post:
+      summary: "Create new reviews"
+      description: "Create spectified shops new reviews"
+      tags: ["reviews"]
+      requestBody:
+        description: "Contents of review"
+        required: true
+        content:
+          appication/json:
+            schema:
+              $ref: "#/components/schemas/review"
+      responses:
+        "201":
+          description: "Success operation"
+          headers:
+            location:
+              description: "New URL of created review"
+              schema: { type: string, format: url }
+        "400":
+          $ref: "#/components/responses/400-BadRequest"
+
+security:
+  - apikey_auth: []
+
+components:
+  schemas:
+    review:
+      type: object
+      properties:
+        score: { type: integer }
+        comment: { type: string }
+    ClientError:
+      type: object
+      properties:
+        code: { type: string }
+        type: { type: string }
+        message: { type: string }
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field: { type: string }
+              code: { type: string }
+  parameters:
+    shopId:
+      name: shopId
+      in: path
+      description: "Shop identifier"
+      required: true
+      schema: { type: string }
+  responses:
+    400-BadRequest:
+      description: "Client side error"
+      content:
+        appication/json:
+          schema:
+            $ref: "#/components/schemas/ClientError"
+  securitySchemes:
+    apikey_auth:
+      description: "API Key authorization"
+      type: apiKey
+      in: header
+      name: "X-Api-Key"

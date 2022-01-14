@@ -1,0 +1,28 @@
+openapi: "3.0.3"
+
+info:
+  title: "Shop Review API"
+  version: "1.0.0"
+
+paths: {}
+
+components:
+  schemas:
+    SampleObject:
+      type: object
+      properties:
+        shop:
+          type: object
+          properties:
+            name: { type: string }
+            place: { type: string }
+        reviews:
+          type: array
+          items:
+            type: object
+            properties:
+              score:
+                type: integer
+                enum: [1, 2, 3, 4, 5]
+              comment:
+                type: string
